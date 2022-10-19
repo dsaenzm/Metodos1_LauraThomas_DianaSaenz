@@ -1,1 +1,0 @@
-La complejidad es de r(n-1)
