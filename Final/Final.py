@@ -1,8 +1,6 @@
 import numpy as np
-from tqdm import tqdm
 import matplotlib.pyplot as plt
 from itertools import permutations
-from itertools import combinations
 from itertools import combinations_with_replacement
 
 #Parámetros necesarios
@@ -33,17 +31,17 @@ for i in range(len(Ocultos)):
       n = len(Obs)
       p = 1
       p*= Prior[State[0]]
-      for i in range(n-1):
-          p *= T[ State[i+1], State[i] ]
-      for i in range(n):
-          p *= E[ Obs[i], State[i] ]
+      for y in range(n-1):
+          p *= T[ State[y+1], State[y] ]
+      for y in range(n):
+          p *= E[ Obs[y], State[y] ]
       return p
 
     dim = Ocultos.shape[0]
     P = np.zeros(dim)
     
     for y in range(dim):
-        P[i] = GetProb(T,E,Obs,Ocultos[y],Prior)
+        P[y] = GetProb(T,E,Obs,Ocultos[y],Prior)
     
     maxP = np.max(P)
     iy = np.where( P == np.amax(P))
@@ -70,8 +68,8 @@ for i in range(len(Ocultos)):
             dim = Ocultos.shape[0]
             P = np.zeros(dim)
             
-            for i in range(dim):
-                P[i] = GetProb(T,E,ObsStates[j],Ocultos[i],Prior)
+            for y in range(dim):
+                P[y] = GetProb(T,E,ObsStates[j],Ocultos[y],Prior)
                 
             PObs[j] = np.sum(P)
         
@@ -84,7 +82,7 @@ for i in range(len(Ocultos)):
         jj = np.where( PObs == np.amax(PObs))
         
         #Punto d
-        print("Para el b: El estado más probable:",ObsStates[jj][0],"tiene probabilidad de:",maxP)
+        print("Para el b: El estado más probable:",ObsStates[jj][0],"tiene probabilidad de:",round(maxP,3))
         
         print("Para el punto d. La suma de todas las probabilidades de los estados observables es:",np.sum(PObs))
         
